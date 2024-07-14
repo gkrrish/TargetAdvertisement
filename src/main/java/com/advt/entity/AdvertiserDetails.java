@@ -1,0 +1,44 @@
+package com.advt.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Table(name = "ADVERTISER_DETAILS")
+@Data
+public class AdvertiserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "advertiser_id")
+    private Integer advertiserId;
+
+    @Column(name = "UserID", nullable = true)
+    private Integer userId;
+
+    @Column(name = "isUser", nullable = false)
+    private String isUser = "N";
+
+    @Column(name = "advertiser_name", nullable = false)
+    private String advertiserName;
+
+    @Column(name = "advertiser_mobile_number", nullable = true)
+    private String advertiserMobileNumber;
+
+    @Column(name = "contact_details", nullable = true)
+    private String contactDetails;
+
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "UserID", insertable = false, updatable = false)
+    private UserDetails userDetails;
+}
