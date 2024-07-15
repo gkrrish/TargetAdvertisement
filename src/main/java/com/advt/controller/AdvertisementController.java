@@ -8,47 +8,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.advt.entity.TargetedAdvertisements;
-import com.advt.repository.AdvertiserDetailsRepository;
-import com.advt.repository.TargetedAdvertisementsRepository;
-import com.advt.request.CreateAdvertisementRequest;
+import com.advt.request.AdvertisementPlanRequest;
+import com.advt.request.AdvertisementRequest;
+import com.advt.request.AdvertiserDetailsRequest;
+import com.advt.service.AdvertisementService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/advertisements")
+@RequestMapping("/advertisements")
 public class AdvertisementController {
-
+    
     @Autowired
-    private TargetedAdvertisementsRepository targetedAdvertisementsRepository;
+    private AdvertisementService advertisementService;
 
-    @Autowired
-    private AdvertiserDetailsRepository advertiserDetailsRepository;
-
-    @PostMapping
-    public ResponseEntity<String> createAdvertisement(@Valid @RequestBody CreateAdvertisementRequest request) {
-        if (!advertiserDetailsRepository.existsById(request.getAdvertiserId())) {
-            return ResponseEntity.badRequest().body("Advertiser not found.");
-        }
-
-        if (request.getStartTime().after(request.getEndTime())) {
-            return ResponseEntity.badRequest().body("Start time must be before end time.");
-        }
-
-        TargetedAdvertisements advertisement = new TargetedAdvertisements();
-        advertisement.setAdvertiserId(request.getAdvertiserId());
-        advertisement.setLocationId(request.getLocationId());
-        advertisement.setMediaType(request.getMediaType());
-        advertisement.setFileSize(request.getFileSize());
-        advertisement.setUserCount(request.getUserCount());
-        advertisement.setPrice(request.getPrice());
-        advertisement.setStartTime(request.getStartTime());
-        advertisement.setEndTime(request.getEndTime());
-        advertisement.setAdvertisementType(request.getAdvertisementType());
-        advertisement.setAmount(request.getAmount());
-        advertisement.setTariffOffer(request.getTariffOffer());
-
-        targetedAdvertisementsRepository.save(advertisement);
-        return ResponseEntity.ok("Advertisement created successfully.");
+    @PostMapping("/create/advertisementplan")
+    public ResponseEntity<String> createAdvertisementPlan(@Valid @RequestBody AdvertisementPlanRequest request) {
+        String response = advertisementService.createAdvertisementPlan(request);
+        return ResponseEntity.ok(response);
+    }
+    
+   
+    @PostMapping("/create/advertisement")
+    public TargetedAdvertisements createAdvertisement(@RequestBody AdvertisementRequest request) {
+        return advertisementService.createAdvertisement(request);
+    }
+    
+    @PostMapping("/create/advertiseragent")
+    public ResponseEntity<String> addAdvertiser(@Valid @RequestBody AdvertiserDetailsRequest request) {
+    	String response = advertisementService.createAdvertiser(request);
+        return ResponseEntity.ok(response);
     }
 }
 

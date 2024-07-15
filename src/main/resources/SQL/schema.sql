@@ -9,9 +9,8 @@ CREATE TABLE ADVERTISER_DETAILS (
     FOREIGN KEY (UserID) REFERENCES USER_DETAILS(UserID)
 );
 
-CREATE TABLE TARGETED_ADVERTISEMENTS (
+CREATE TABLE TARGETED_ADVERTISEMENT_PLAN (
     advertisement_id INT PRIMARY KEY,
-    advertiser_id INT NOT NULL,
     location_id INT NOT NULL,
     media_type VARCHAR2(50) CHECK (media_type IN ('audio', 'video', 'image', 'pdf')),
     file_length NUMBER(10), -- length in seconds for audio/video
@@ -23,8 +22,24 @@ CREATE TABLE TARGETED_ADVERTISEMENTS (
     advertisement_type VARCHAR2(50),
     amount DECIMAL(10, 2),
     tariff_offer VARCHAR2(255),
-    FOREIGN KEY (advertiser_id) REFERENCES ADVERTISER_DETAILS(advertiser_id),
     FOREIGN KEY (location_id) REFERENCES MASTER_STATEWISE_LOCATIONS(location_id)
+);
+
+CREATE TABLE TARGETED_ADVERTISEMENTS (
+    TargetAdvtId INT PRIMARY KEY,
+    FileLocation VARCHAR2(1055) NOT NULL,
+    createdDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    paid CHAR(1) CHECK (paid IN ('Y', 'N')),
+    paid_amount DECIMAL(10, 2) CHECK (paid_amount >= 0),
+    VerifiedByAdmin CHAR(1) CHECK (VerifiedByAdmin IN ('Y', 'N')),
+    AdminName VARCHAR2(255),
+    VerifiedTimestamp TIMESTAMP,
+    VerificationREMARKS VARCHAR2(255),
+    verified_allow_to_publish CHAR(1) CHECK (verified_allow_to_publish IN ('Y', 'N')),
+    advertisement_id INT,
+    advertiser_id INT,
+    FOREIGN KEY (advertisement_id) REFERENCES TARGETED_ADVERTISEMENT_PLAN(advertisement_id),
+    FOREIGN KEY (advertiser_id) REFERENCES ADVERTISER_DETAILS(advertiser_id)
 );
 
 

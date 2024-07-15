@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -15,15 +16,16 @@ import lombok.Data;
 @Data
 public class AdvertiserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "advertiser_details_seq")
+    @SequenceGenerator(name = "advertiser_details_seq", sequenceName = "advertiser_details_seq", allocationSize = 1)
     @Column(name = "advertiser_id")
     private Integer advertiserId;
 
     @Column(name = "UserID", nullable = true)
     private Integer userId;
 
-    @Column(name = "isUser", nullable = false)
+    @Column(name = "ISUSER", nullable = false)
     private String isUser = "N";
 
     @Column(name = "advertiser_name", nullable = false)

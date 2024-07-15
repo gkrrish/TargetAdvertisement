@@ -3,14 +3,7 @@ package com.advt.entity;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -19,52 +12,43 @@ import lombok.Data;
 public class TargetedAdvertisements {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "advertisement_id")
-    private Integer advertisementId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "targeted_advts_seq")
+    @SequenceGenerator(name = "targeted_advts_seq", sequenceName = "targeted_advts_seq", allocationSize = 1)
+    @Column(name = "TargetAdvtId")
+    private Integer targetAdvtId;
 
-    @Column(name = "advertiser_id", nullable = false)
-    private Integer advertiserId;
+    @Column(name = "FileLocation", nullable = false)
+    private String fileLocation;
 
-    @Column(name = "location_id", nullable = false)
-    private Integer locationId;
+    @Column(name = "createdDate", nullable = false)
+    private Timestamp createdDate;
 
-    @Column(name = "media_type", nullable = false)
-    private String mediaType;
+    @Column(name = "paid", nullable = true)
+    private String paid;
 
-    @Column(name = "file_length", nullable = true)
-    private Integer fileLength;
+    @Column(name = "paid_amount", nullable = true)
+    private BigDecimal paidAmount;
 
-    @Column(name = "file_size", nullable = true)
-    private Integer fileSize;
+    @Column(name = "VerifiedByAdmin", nullable = true)
+    private String verifiedByAdmin;
 
-    @Column(name = "user_count", nullable = false)
-    private Integer userCount;
+    @Column(name = "AdminName", nullable = true)
+    private String adminName;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    @Column(name = "VerifiedTimestamp", nullable = true)
+    private Timestamp verifiedTimestamp;
 
-    @Column(name = "start_time", nullable = false)
-    private Timestamp startTime;
+    @Column(name = "VerificationREMARKS", nullable = true)
+    private String verificationRemarks;
 
-    @Column(name = "end_time", nullable = false)
-    private Timestamp endTime;
+    @Column(name = "verified_allow_to_publish", nullable = true)
+    private String verifiedAllowToPublish;
 
-    @Column(name = "advertisement_type", nullable = true)
-    private String advertisementType;
-
-    @Column(name = "amount", nullable = true)
-    private BigDecimal amount;
-
-    @Column(name = "tariff_offer", nullable = true)
-    private String tariffOffer;
+    @ManyToOne
+    @JoinColumn(name = "advertisement_id", insertable = false, updatable = false)
+    private TargetedAdvertisementPlan targetedAdvertisementPlan;
 
     @ManyToOne
     @JoinColumn(name = "advertiser_id", insertable = false, updatable = false)
     private AdvertiserDetails advertiserDetails;
-
-    @ManyToOne
-    @JoinColumn(name = "location_id", insertable = false, updatable = false)
-    private StatewiseLocation masterStatewiseLocation;
 }
-
