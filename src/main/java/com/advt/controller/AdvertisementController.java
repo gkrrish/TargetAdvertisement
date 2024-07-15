@@ -21,6 +21,12 @@ public class AdvertisementController {
     
     @Autowired
     private AdvertisementService advertisementService;
+    
+    @PostMapping("/create/advertiseragent")
+    public ResponseEntity<String> addAdvertiser(@Valid @RequestBody AdvertiserDetailsRequest request) {
+    	String response = advertisementService.createAdvertiser(request);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/create/advertisementplan")
     public ResponseEntity<String> createAdvertisementPlan(@Valid @RequestBody AdvertisementPlanRequest request) {
@@ -34,10 +40,6 @@ public class AdvertisementController {
         return advertisementService.createAdvertisement(request);
     }
     
-    @PostMapping("/create/advertiseragent")
-    public ResponseEntity<String> addAdvertiser(@Valid @RequestBody AdvertiserDetailsRequest request) {
-    	String response = advertisementService.createAdvertiser(request);
-        return ResponseEntity.ok(response);
-    }
+  
 }
 

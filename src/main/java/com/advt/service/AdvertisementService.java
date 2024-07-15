@@ -1,6 +1,7 @@
 package com.advt.service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,15 +31,18 @@ public class AdvertisementService {
 
 	public TargetedAdvertisements createAdvertisement(AdvertisementRequest request) {
 		TargetedAdvertisements advertisement = new TargetedAdvertisements();
-		advertisement.setFileLocation(request.getFileLocation());
+		advertisement.setFileLocation("C:\\Users\\Gaganam Krishna\\Downloads\\test-newspapers\\AnnojigudaLocalAdvt.png");//later get from user
 		advertisement.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-		advertisement.setPaid(request.getPaid());
+		advertisement.setPaid("Y");//get this from payment gateway
 		advertisement.setPaidAmount(request.getPaidAmount());
-		advertisement.setVerifiedByAdmin(request.getVerifiedByAdmin());
-		advertisement.setAdminName(request.getAdminName());
-		advertisement.setVerifiedTimestamp(request.getVerifiedTimestamp());
-		advertisement.setVerificationRemarks(request.getVerificationRemarks());
-		advertisement.setVerifiedAllowToPublish(request.getVerifiedAllowToPublish());
+		advertisement.setVerifiedByAdmin("Y");//get it from LDAP employee profile
+		advertisement.setAdminName("KRISHNA-TEST");
+		advertisement.setVerifiedTimestamp(new Timestamp(System.currentTimeMillis()));
+		advertisement.setVerificationRemarks("Good");
+		advertisement.setVerifiedAllowToPublish("Y");
+		TargetedAdvertisementPlan plan=new TargetedAdvertisementPlan();
+		plan.setAdvertisementId(request.getAdvertisementId());
+		advertisement.setTargetedAdvertisementPlan(plan);
 		// Set relationships if needed
 		return targetedAdvertisementsRepository.save(advertisement);
 	}
@@ -53,6 +57,7 @@ public class AdvertisementService {
 	    advertisement.setLocationId(request.getLocationId());
 	    advertisement.setMediaType(request.getMediaType());
 	    advertisement.setFileSize(request.getFileSize());
+	    advertisement.setFileLength(request.getFileLength());
 	    advertisement.setUserCount(request.getUserCount());
 	    advertisement.setPrice(request.getPrice());
 	    advertisement.setStartTime(request.getStartTime());
