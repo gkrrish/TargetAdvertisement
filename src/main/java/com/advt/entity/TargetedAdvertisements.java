@@ -16,6 +16,12 @@ public class TargetedAdvertisements {
     @SequenceGenerator(name = "TARGETED_ADVTS_SEQ", sequenceName = "TARGETED_ADVTS_SEQ", allocationSize = 1)
     @Column(name = "TARGETADVTID")
     private Integer targetAdvtId;
+    
+    @Column(name = "advertisement_id", nullable = false)
+    private Integer advertisementId;
+    
+    @Column(name = "advertiser_id", nullable = false)
+    private Integer advertiserId;
 
     @Column(name = "FILELOCATION", nullable = false)
     private String fileLocation;
@@ -43,9 +49,9 @@ public class TargetedAdvertisements {
 
     @Column(name = "verified_allow_to_publish", nullable = true)
     private String verifiedAllowToPublish;
-
+    
     @ManyToOne
-    @JoinColumn(name = "advertisement_id", insertable = true, updatable = true)
+    @JoinColumn(name = "advertisement_id", insertable = false, updatable = false)
     private TargetedAdvertisementPlan targetedAdvertisementPlan;
 
     @ManyToOne

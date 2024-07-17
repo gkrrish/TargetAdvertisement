@@ -59,6 +59,6 @@ public class TargetedAdvertisementPlan {
 	private String tariffOffer;
 
 	@ManyToOne
-	@JoinColumn(name = "location_id", insertable = false, updatable = false)
-	private StatewiseLocation masterStatewiseLocation;
+    @JoinColumn(name = "location_id", insertable = false, updatable = false)
+    private StatewiseLocation masterStatewiseLocation;
 }
