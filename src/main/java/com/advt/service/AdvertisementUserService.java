@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advt.entity.TargetedAdvertisementPlan;
 import com.advt.repository.AdvertiserDetailsRepository;
 import com.advt.repository.TargetedAdvertisementPlanRepository;
+import com.advt.repository.UserSubscriptionRepository;
 import com.advt.response.AdvertiserResponse;
 import com.advt.response.ExistingAdvertiserResponse;
 import com.advt.response.NewAdvertiserResponse;
@@ -21,6 +22,8 @@ public class AdvertisementUserService {
 	
 	@Autowired
     private TargetedAdvertisementPlanRepository targetedAdvertisementPlanRepository;
+	@Autowired
+    private UserSubscriptionRepository userSubscriptionRepository;
 
 
 	/**
@@ -46,6 +49,10 @@ public class AdvertisementUserService {
 	
 	public List<TargetedAdvertisementPlan> getAvailablePlansByLocationId(Integer locationId) {
         return targetedAdvertisementPlanRepository.findAvailablePlansByLocationId(locationId);
+    }
+
+	public Long getTotalSubscribersByLocationId(Integer locationId) {
+        return userSubscriptionRepository.countSubscribersByLocationId(locationId);
     }
 
 }

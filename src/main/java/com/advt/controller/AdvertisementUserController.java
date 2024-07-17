@@ -53,4 +53,9 @@ public class AdvertisementUserController {
 		return advertisementUserService.getAvailablePlansByLocationId(locationId);
 	}
 	
+	@GetMapping("/subscribers/{locationId}")
+	public Long getTotalSubscribersByLocationId(@PathVariable Integer locationId) {
+		return advertisementUserService.getTotalSubscribersByLocationId(locationId);
+	}
+	
 }
