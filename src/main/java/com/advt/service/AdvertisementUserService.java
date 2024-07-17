@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advt.entity.TargetedAdvertisementPlan;
 import com.advt.repository.AdvertiserDetailsRepository;
+import com.advt.repository.TargetedAdvertisementPlanRepository;
 import com.advt.response.AdvertiserResponse;
 import com.advt.response.ExistingAdvertiserResponse;
 import com.advt.response.NewAdvertiserResponse;
@@ -16,6 +18,10 @@ public class AdvertisementUserService {
 
 	@Autowired
 	private AdvertiserDetailsRepository advertiserDetailsRepository;
+	
+	@Autowired
+    private TargetedAdvertisementPlanRepository targetedAdvertisementPlanRepository;
+
 
 	/**
 	 * //this is for single Location, need to check StateLevel or District Level later, and if bulk orders case?
@@ -36,7 +42,10 @@ public class AdvertisementUserService {
 			response.setYourRecentPrevioiusLocation(previousLocationByMobileNumber.toString());
 			return response;
 		}
-		
 	}
+	
+	public List<TargetedAdvertisementPlan> getAvailablePlansByLocationId(Integer locationId) {
+        return targetedAdvertisementPlanRepository.findAvailablePlansByLocationId(locationId);
+    }
 
 }
