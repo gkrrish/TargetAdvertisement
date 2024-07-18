@@ -51,8 +51,7 @@ public class AdvertisementUserService {
         return targetedAdvertisementPlanRepository.findAvailablePlansByLocationId(locationId);
     }
 
-	public Long getTotalSubscribersByLocationId(Integer locationId) {
-        return userSubscriptionRepository.countSubscribersByLocationId(locationId);
+	public Long getTotalSubscribersByLocationId(int locationId) {
+        return userSubscriptionRepository.countSubscribersByLocationId((long) locationId);
     }
-
 }

@@ -12,11 +12,9 @@ import com.advt.entity.UserSubscriptionId;
 @Repository
 public interface UserSubscriptionRepository extends JpaRepository<UserSubscription, UserSubscriptionId> {
 
-	@Query("SELECT COUNT(uns) FROM UserNewspaperSubscription uns " +
-	           "JOIN Vendors v ON uns.newspaperMasterId = v.newspaperMasterId " +
-	           "JOIN MasterStatewiseLocations msl ON v.locationId = msl.locationId " +
-	           "WHERE msl.locationId = :locationId")
-	    Long countSubscribersByLocationId(@Param("locationId") Integer locationId);
-	
-	
+		@Query("SELECT COUNT(us) FROM UserSubscription us " +
+	           "JOIN us.vendor v " +
+	           "JOIN v.location l " +
+	           "WHERE l.locationId = :locationId")
+	    long countSubscribersByLocationId(@Param("locationId") Long locationId);//validate later with original data
 }
