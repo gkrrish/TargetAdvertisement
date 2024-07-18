@@ -3,13 +3,13 @@ package com.advt.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.advt.entity.TargetedAdvertisementPlan;
 import com.advt.request.WelcomeRequest;
@@ -50,6 +50,8 @@ public class AdvertisementUserController {
 
 	@GetMapping("/available-plans/{locationId}")
 	public List<TargetedAdvertisementPlan> getAvailablePlansByLocationId(@PathVariable Integer locationId) {
+		//if plan not available then how to handle? need to send the details to admin and default plans should be shown right?
+		//for that think after this
 		return advertisementUserService.getAvailablePlansByLocationId(locationId);
 	}
 	
@@ -57,5 +59,11 @@ public class AdvertisementUserController {
 	public Long getTotalSubscribersByLocationId(@PathVariable Integer locationId) {
 		return advertisementUserService.getTotalSubscribersByLocationId(locationId);
 	}
+	
+	@GetMapping("/batchids/{timePeriod}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getBatchIds(@PathVariable String timePeriod) {
+		 return externalServiceCalls.getDeliveryTimesByTimePeriod(timePeriod);
+    }
 	
 }

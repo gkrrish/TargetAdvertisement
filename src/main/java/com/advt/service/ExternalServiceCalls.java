@@ -33,4 +33,10 @@ public class ExternalServiceCalls {
         return restTemplate.exchange(url, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<String>>() {}, mobileNumber, districtName).getBody();
     }
+    
+    public List<String> getDeliveryTimesByTimePeriod(String timePeriod) {
+		String url = BASE_URL + "batchids/" + timePeriod;
+		return restTemplate.exchange(url, HttpMethod.GET, null, 
+			   new ParameterizedTypeReference<List<String>>() {}, timePeriod).getBody();
+    }
 }
