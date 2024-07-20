@@ -38,8 +38,10 @@ CREATE TABLE TARGETED_ADVERTISEMENTS (
     verified_allow_to_publish CHAR(1) CHECK (verified_allow_to_publish IN ('Y', 'N')),
     advertisement_id INT,
     advertiser_id INT,
+    batchId NUMBER,
     FOREIGN KEY (advertisement_id) REFERENCES TARGETED_ADVERTISEMENT_PLAN(advertisement_id),
-    FOREIGN KEY (advertiser_id) REFERENCES ADVERTISER_DETAILS(advertiser_id)
+    FOREIGN KEY (advertiser_id) REFERENCES ADVERTISER_DETAILS(advertiser_id),
+    FOREIGN KEY (batchId) REFERENCES MASTER_BATCH_JOBS(BATCH_ID)
 );
 
 

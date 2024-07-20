@@ -1,6 +1,8 @@
-package com.advt.entity;
+package com.advt.main.entity;
 
 import java.util.List;
+
+import com.advt.entity.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

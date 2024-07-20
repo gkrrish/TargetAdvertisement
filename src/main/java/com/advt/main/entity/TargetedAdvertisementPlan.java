@@ -1,7 +1,9 @@
-package com.advt.entity;
+package com.advt.main.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import com.advt.entity.StatewiseLocation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

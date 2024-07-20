@@ -1,9 +1,19 @@
-package com.advt.entity;
+package com.advt.main.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import jakarta.persistence.*;
+import com.advt.entity.BatchJob;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
@@ -57,4 +67,11 @@ public class TargetedAdvertisements {
     @ManyToOne
     @JoinColumn(name = "advertiser_id", insertable = false, updatable = false)
     private AdvertiserDetails advertiserDetails;
+    
+    @Column(name = "BATCHID", nullable = true)
+    private Integer batchId; //this is used when we want to save the single value, instead of object
+    
+    @ManyToOne
+    @JoinColumn(name = "BATCHID", insertable = false, updatable = false)
+    private BatchJob batchJob;
 }

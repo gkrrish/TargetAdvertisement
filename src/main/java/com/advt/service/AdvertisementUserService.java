@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advt.entity.TargetedAdvertisementPlan;
+import com.advt.main.entity.TargetedAdvertisementPlan;
 import com.advt.repository.AdvertiserDetailsRepository;
 import com.advt.repository.TargetedAdvertisementPlanRepository;
 import com.advt.repository.UserSubscriptionRepository;
@@ -24,7 +24,6 @@ public class AdvertisementUserService {
     private TargetedAdvertisementPlanRepository targetedAdvertisementPlanRepository;
 	@Autowired
     private UserSubscriptionRepository userSubscriptionRepository;
-
 
 	/**
 	 * //this is for single Location, need to check StateLevel or District Level later, and if bulk orders case?
@@ -54,4 +53,5 @@ public class AdvertisementUserService {
 	public Long getTotalSubscribersByLocationId(int locationId) {
         return userSubscriptionRepository.countSubscribersByLocationId((long) locationId);
     }
+	
 }

@@ -1,16 +1,17 @@
 package com.advt.service;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.advt.entity.AdvertiserDetails;
-import com.advt.entity.TargetedAdvertisementPlan;
-import com.advt.entity.TargetedAdvertisements;
+import com.advt.entity.BatchJob;
+import com.advt.main.entity.AdvertiserDetails;
+import com.advt.main.entity.TargetedAdvertisementPlan;
+import com.advt.main.entity.TargetedAdvertisements;
 import com.advt.repository.AdvertiserDetailsRepository;
+import com.advt.repository.BatchJobRepository;
 import com.advt.repository.TargetedAdvertisementPlanRepository;
 import com.advt.repository.TargetedAdvertisementsRepository;
 import com.advt.request.AdvertisementPlanRequest;
@@ -22,14 +23,15 @@ public class AdvertisementService {
 
 	@Autowired
 	private TargetedAdvertisementsRepository targetedAdvertisementsRepository;
-
 	@Autowired
 	private TargetedAdvertisementPlanRepository targetedAdvertisementPlanRepository;
-
 	@Autowired
 	private AdvertiserDetailsRepository advertiserDetailsRepository;
+	@Autowired
+    private BatchJobRepository batchJobRepository;
 
-	public TargetedAdvertisements createAdvertisement(AdvertisementRequest request) {
+	public String createAdvertisement(AdvertisementRequest request, int batchId) {
+		
 		TargetedAdvertisements advertisement = new TargetedAdvertisements();
 		advertisement.setFileLocation("C:\\Users\\Gaganam Krishna\\Downloads\\test-newspapers\\AnnojigudaLocalAdvt.png");//later get from user
 		advertisement.setCreatedDate(new Timestamp(System.currentTimeMillis()));
@@ -40,11 +42,13 @@ public class AdvertisementService {
 		advertisement.setVerifiedTimestamp(new Timestamp(System.currentTimeMillis()));
 		advertisement.setVerificationRemarks("Good");
 		advertisement.setVerifiedAllowToPublish("Y");
-		TargetedAdvertisementPlan plan=new TargetedAdvertisementPlan();
-		plan.setAdvertisementId(request.getAdvertisementId());
-		advertisement.setTargetedAdvertisementPlan(plan);
+		advertisement.setBatchId(batchId);
+		
+		advertisement.setAdvertisementId(request.getAdvertisementId());
 		// Set relationships if needed
-		return targetedAdvertisementsRepository.save(advertisement);
+		targetedAdvertisementsRepository.save(advertisement);
+		
+		return "Success";
 	}
 
 	@Transactional
@@ -84,5 +88,10 @@ public class AdvertisementService {
 		advertiserDetailsRepository.save(advertiser);
 
 		return "Advertiser added successfully.";
+	}
+	
+	public long getBatchId(String batchTime) {
+		BatchJob batchJob = batchJobRepository.findByDeliveryTime(batchTime).orElseThrow(() -> new RuntimeException("Batch not found"));
+		return batchJob.getBatchId();
 	}
 }
