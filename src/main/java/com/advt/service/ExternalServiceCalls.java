@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ExternalServiceCalls {
 
-    private static final String BASE_URL = "http://localhost:8383/";
+    private static final String BASE_URL = "http://localhost:9009/";
 
     @Autowired
     private RestTemplate restTemplate;
